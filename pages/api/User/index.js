@@ -1,4 +1,5 @@
 import connectMongo from "../../../database/conn";
+import { getUser } from "../../../database/Controller";
 
 export default async function handler(req, res) {
   connectMongo().catch(()=>res.status(405).json({error:"error in the component"}))
@@ -20,7 +21,7 @@ export default async function handler(req, res) {
       res.status(200).json({ method, name: "DELETE Request" });
       break;
 
-      default:res.setHeader("ALLOW",["GET","POSY","PUT","DELETE"]);
+      default:res.setHeader("ALLOW",["GET","POST","PUT","DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`)
   }
   
