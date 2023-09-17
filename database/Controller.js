@@ -11,6 +11,8 @@ export async function getUser(req, res) {
     res.status(404).json({ error: "Error while fetching data" });
   }
 }
+
+
 // Post Request//
 export async function postUser(req,res){
     try{
@@ -32,11 +34,25 @@ try{
 const{userId}= req.query;
 const formData=req.body;
 if(userId && formData){
-    await Users.findByIdAndUpdate(userId,formData);
-    res.status(200).json(formData)
+    const user=await Users.findByIdAndUpdate(userId,formData);
+    res.status(200).json(user)
 }
 res.status(404).json({error:"user not selected"})
 }catch(error){
     res.status(404).json({error:"error while updating the data"})
 }
 }
+
+// delete Request to add with local hoast URL/ userID
+ export async function deleteUser(req,res){
+  try{
+const {userId}=req.query
+if(!userId){
+  const user=Users.findByIdAndDelete(userId)
+  return res.status(200).json({deleted:userId})
+}
+res.status(404).json({error:"user not found"})
+  }catch(error){
+res.status(404).json({error:"erro while deleting the user"})
+  }
+ }
